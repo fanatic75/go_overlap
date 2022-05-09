@@ -105,6 +105,9 @@ func calculateOverlap(fund string) {
 		}
 		commonStocks := utils.Intersection(fundsMap[f], fundsMap[fund])
 		overlapValue := (float64(2*len(commonStocks)) / float64(len(fundsMap[f])+len(fundsMap[fund])) * 100)
+		if overlapValue == 0 {
+			continue
+		}
 		fmt.Printf("%s %s %0.2f%%\n", fund, f, overlapValue)
 	}
 
