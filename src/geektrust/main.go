@@ -74,8 +74,23 @@ func main() {
 		case CALCULATE_OVERLAP:
 			{
 				fund := argList[1]
-				user.CalculateOverlap(fund)
-				break
+				for _, userFund := range user.Funds {
+					if userFund == fund {
+						continue
+					}
+					if _, ok := fundsMap[fund]; ok == false {
+						fmt.Println("FUND_NOT_FOUND")
+						break
+					}
+					numberOfCommonStocks := len(utils.GetCommonStocks(fundsMap[userFund], fundsMap[fund]))
+					numberOfStocksInA := len(fundsMap[userFund])
+					numberOfStocksInB := len(fundsMap[fund])
+					overlap := CalculateOverlap(numberOfCommonStocks, numberOfStocksInA, numberOfStocksInB)
+					if overlap == 0 {
+						continue
+					}
+					fmt.Printf("%s %s %0.2f%%\n", fund, userFund, overlap)
+				}
 			}
 
 		case ADD_STOCK:
@@ -90,21 +105,7 @@ func main() {
 	}
 }
 
-func (user *User) CalculateOverlap(fundToCompare string) {
-	for _, userFund := range user.Funds {
-		if userFund == fundToCompare {
-			continue
-		}
-		if _, ok := fundsMap[fundToCompare]; ok == false {
-			fmt.Println("FUND_NOT_FOUND")
-			break
-		}
-		commonStocks := utils.GetCommonStocks(fundsMap[userFund], fundsMap[fundToCompare])
-		overlap := (float64(2*len(commonStocks)) / float64(len(fundsMap[userFund])+len(fundsMap[fundToCompare])) * 100)
-		if overlap == 0 {
-			continue
-		}
-		fmt.Printf("%s %s %0.2f%%\n", fundToCompare, userFund, overlap)
-	}
-
+func CalculateOverlap(numberOfCommonStocks, numberOfStocksInA, numberOfStocksInB int) (overlap float64) {
+	overlap = (float64(2*numberOfCommonStocks) / float64(numberOfStocksInA+numberOfStocksInB) * 100)
+	return overlap
 }
