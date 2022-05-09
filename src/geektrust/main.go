@@ -24,7 +24,6 @@ type Fund struct {
 	Stocks []string
 }
 
-var user = User{Funds: make([]string, 0)}
 var fundsJson FundsJson
 
 var fundsMap map[string][]string = map[string][]string{}
@@ -59,12 +58,13 @@ func main() {
 	}
 	scanner := bufio.NewScanner(file)
 
+	var user = User{Funds: make([]string, 0)}
 	for scanner.Scan() {
 
 		args := scanner.Text()
 		argList := strings.Fields(args)
-		action := argList[0]
-		switch action {
+		typeOfAction := argList[0]
+		switch typeOfAction {
 		case CURRENT_PORTFOLIO:
 			{
 				funds := argList[1:]
