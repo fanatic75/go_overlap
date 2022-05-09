@@ -74,7 +74,7 @@ func main() {
 		case CALCULATE_OVERLAP:
 			{
 				fund := argList[1]
-				user.PrintOverlapValue(fund)
+				user.CalculateOverlap(fund)
 				break
 			}
 
@@ -90,7 +90,7 @@ func main() {
 	}
 }
 
-func (user *User) PrintOverlapValue(fund string) {
+func (user *User) CalculateOverlap(fund string) {
 	for _, f := range user.Funds {
 		if f == fund {
 			continue

@@ -21,7 +21,7 @@ func TestCalculateOverlap(t *testing.T) {
 	os.Stdout = w
 	var user = User{Funds: make([]string, 0)}
 	user.Funds = append(user.Funds, "AXIS_BLUECHIP")
-	user.PrintOverlapValue("MIRAE_ASSET_EMERGING_BLUECHIP")
+	user.CalculateOverlap("MIRAE_ASSET_EMERGING_BLUECHIP")
 
 	w.Close()
 	out, _ := ioutil.ReadAll(r)
