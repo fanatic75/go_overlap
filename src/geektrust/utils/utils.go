@@ -1,6 +1,6 @@
 package utils
 
-func Intersection(s1, s2 []string) (inter []string) {
+func GetCommonStocks(s1, s2 []string) (inter []string) {
 	hash := make(map[string]bool)
 	for _, e := range s1 {
 		hash[e] = true

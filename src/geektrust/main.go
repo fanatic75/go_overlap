@@ -90,21 +90,21 @@ func main() {
 	}
 }
 
-func (user *User) CalculateOverlap(fund string) {
-	for _, f := range user.Funds {
-		if f == fund {
+func (user *User) CalculateOverlap(fundToCompare string) {
+	for _, userFund := range user.Funds {
+		if userFund == fundToCompare {
 			continue
 		}
-		if _, ok := fundsMap[fund]; ok == false {
+		if _, ok := fundsMap[fundToCompare]; ok == false {
 			fmt.Println("FUND_NOT_FOUND")
 			break
 		}
-		commonStocks := utils.Intersection(fundsMap[f], fundsMap[fund])
-		overlapValue := (float64(2*len(commonStocks)) / float64(len(fundsMap[f])+len(fundsMap[fund])) * 100)
-		if overlapValue == 0 {
+		commonStocks := utils.GetCommonStocks(fundsMap[userFund], fundsMap[fundToCompare])
+		overlap := (float64(2*len(commonStocks)) / float64(len(fundsMap[userFund])+len(fundsMap[fundToCompare])) * 100)
+		if overlap == 0 {
 			continue
 		}
-		fmt.Printf("%s %s %0.2f%%\n", fund, f, overlapValue)
+		fmt.Printf("%s %s %0.2f%%\n", fundToCompare, userFund, overlap)
 	}
 
 }
