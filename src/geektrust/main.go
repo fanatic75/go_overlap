@@ -68,20 +68,21 @@ func main() {
 		case CURRENT_PORTFOLIO:
 			{
 				funds := argList[1:]
-				updateUserPortfolio(funds)
+				user.Funds = append(user.Funds, funds...)
 				break
 			}
 		case CALCULATE_OVERLAP:
 			{
 				fund := argList[1]
-				calculateOverlap(fund)
+				user.PrintOverlapValue(fund)
 				break
 			}
 
 		case ADD_STOCK:
 			{
+				fund := argList[1]
 				stockName := strings.Join(argList[2:], " ")
-				addStock(argList[1], stockName)
+				fundsMap[fund] = append(fundsMap[fund], stockName)
 				break
 			}
 		}
@@ -89,14 +90,7 @@ func main() {
 	}
 }
 
-func updateUserPortfolio(funds []string) {
-	for _, fund := range funds {
-		user.Funds = append(user.Funds, fund)
-	}
-
-}
-
-func calculateOverlap(fund string) {
+func (user *User) PrintOverlapValue(fund string) {
 	for _, f := range user.Funds {
 		if f == fund {
 			continue
@@ -113,8 +107,4 @@ func calculateOverlap(fund string) {
 		fmt.Printf("%s %s %0.2f%%\n", fund, f, overlapValue)
 	}
 
-}
-
-func addStock(fund, stock string) {
-	fundsMap[fund] = append(fundsMap[fund], stock)
 }
