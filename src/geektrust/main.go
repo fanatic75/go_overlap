@@ -32,7 +32,6 @@ var fundsMap map[string][]string = map[string][]string{}
 const CURRENT_PORTFOLIO = "CURRENT_PORTFOLIO"
 const CALCULATE_OVERLAP = "CALCULATE_OVERLAP"
 const ADD_STOCK = "ADD_STOCK"
-const OVERLAP_PERCENTAGE = "OVERLAP_PERCENTAGE"
 
 func main() {
 	cliArgs := os.Args[1:]
@@ -79,7 +78,8 @@ func main() {
 
 		case ADD_STOCK:
 			{
-				addStock(argList[1], strings.Join(argList[2:], " "))
+				stockName := strings.Join(argList[2:], " ")
+				addStock(argList[1], stockName)
 				break
 			}
 		}
