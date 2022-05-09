@@ -54,8 +54,8 @@ func main() {
 	if err != nil {
 		log.Fatalf("error while unmarshal %v", err)
 	}
-	for _, f := range fundsJson.Funds {
-		fundsMap[f.Name] = f.Stocks
+	for _, fund := range fundsJson.Funds {
+		fundsMap[fund.Name] = fund.Stocks
 	}
 	scanner := bufio.NewScanner(file)
 
@@ -67,12 +67,14 @@ func main() {
 		switch action {
 		case CURRENT_PORTFOLIO:
 			{
-				updateUserPortfolio(argList[1:])
+				funds := argList[1:]
+				updateUserPortfolio(funds)
 				break
 			}
 		case CALCULATE_OVERLAP:
 			{
-				calculateOverlap(argList[1])
+				fund := argList[1]
+				calculateOverlap(fund)
 				break
 			}
 
